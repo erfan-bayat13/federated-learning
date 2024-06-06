@@ -1,4 +1,6 @@
-# This folder contains the CIFAR-100 dataset and its processing code.
+# CIFAR-100
+
+This folder contains the CIFAR-100 dataset and its processing code.
 
 utils.py: This file houses all the functions required to work with the CIFAR-100 data, such as loading, preprocessing, and manipulation.
 baselineMain.py: This file implements the baseline model for CIFAR-100 classification.
