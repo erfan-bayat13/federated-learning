@@ -1,0 +1,1 @@
+This code implements a centralized approach for training a model on the CIFAR-100 dataset. The model is trained on the entire dataset at a single location, leveraging all the available data for learning.
