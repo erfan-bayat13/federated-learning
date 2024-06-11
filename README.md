@@ -13,8 +13,6 @@ This project explores the use of federated learning techniques for image and tex
 - [Usage](#usage)
 - [Experiments](#experiments)
 - [Results](#results)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Introduction
 
