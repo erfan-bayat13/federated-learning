@@ -33,6 +33,7 @@ The CIFAR-100 dataset consists of 60,000 32x32 color images in 100 classes, with
 The Shakespeare dataset is derived from The Complete Works of William Shakespeare. It is used for next-character prediction tasks and consists of text data divided into roles, where each role can be treated as a separate client in federated learning scenarios.
 
 ## Project Structure
+'''bash
 federated-learning-project/
 │
 ├── data/
@@ -53,6 +54,7 @@ federated-learning-project/
 │
 ├── requirements.txt            # Python dependencies
 ├── README.md                   # Project readme
+'''
 ## Installation
 
 To run this project, you need Python 3.7+ and the necessary dependencies listed in `requirements.txt`.
