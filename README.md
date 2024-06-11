@@ -8,7 +8,6 @@ This project explores the use of federated learning techniques for image and tex
 
 - [Introduction](#introduction)
 - [Datasets](#datasets)
-- [Project Structure](#project-structure)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Experiments](#experiments)
