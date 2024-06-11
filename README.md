@@ -34,20 +34,20 @@ The Shakespeare dataset is derived from The Complete Works of William Shakespear
 
 ## Project Structure
 - **federated-learning-project/**
-  - **data/**
-    - **cifar-100/**              # CIFAR-100 dataset
-    - **shakespeare/**            # Shakespeare dataset
-  - **models/**
-    - **centralized/**            # Centralized model implementations
-    - **federated/**              # Federated model implementations
-  - **experiments/**
-    - **image_classification/**   # Experiments for image classification
-    - **text_classification/**    # Experiments for text classification
-  - **results/**                  # Results and performance metrics
-  - **scripts/**                  # Utility scripts for data processing and model training
-  - **requirements.txt**          # Python dependencies
-  - **README.md**                 # Project readme
-  - **LICENSE**                   # Project license
+  - **data/  **
+    - cifar-100/              # CIFAR-100 dataset
+    - shakespeare/            # Shakespeare dataset
+  - **models/  **
+    - centralized/            # Centralized model implementations
+    - federated/              # Federated model implementations
+  - **experiments/  **
+    - image_classification/   # Experiments for image classification
+    - text_classification/    # Experiments for text classification
+  - **results/  **               # Results and performance metrics
+  - **scripts/  **               # Utility scripts for data processing and model training
+  - requirements.txt          # Python dependencies
+  - README.md                 # Project readme
+  - LICENSE                   # Project license
 
 ## Installation
 
