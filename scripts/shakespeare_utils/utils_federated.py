@@ -3,7 +3,7 @@ from torch.utils.data import Dataset, DataLoader
 import matplotlib.pyplot as plt
 import wandb
 import numpy as np
-from utils import CharLSTM
+from models.models import CharLSTM
 import torch.optim as optim
 
 #PREPROCESSING FUNCTIONS

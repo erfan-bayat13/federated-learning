@@ -19,6 +19,8 @@ import torch.nn as nn
 from collections import Counter
 
 
+from models.LSMT_model import FakeLeNet5
+
 def partition_dataset(dataset, num_partitions):
     data_len = len(dataset)
     indices = list(range(data_len))
@@ -155,35 +157,6 @@ def plot_label_distributions(clients_data, nc, J):
     plt.show()   
     
     
-    
-class FakeLeNet5(nn.Module):
-    def __init__(self): # initialize tha layers that you are going to use
-        super(FakeLeNet5, self).__init__()
-        self.flatten = nn.Flatten()
-        # Define layers of the neural network
-        self.conv1 = nn.Conv2d(3, 64, kernel_size=5)
-        self.conv2 = nn.Conv2d(64, 64, kernel_size=5)
-        self.pool = nn.MaxPool2d(2)
-        self.fc1 = nn.Linear(64 * 5 * 5, 384)
-        self.fc2 = nn.Linear(384, 192)
-        self.fc3 = nn.Linear(192, 100) # 100 is the number of classes
-
-    def forward(self, x):
-        x = self.conv1(x)
-        x = nn.functional.relu(x)
-        x = self.pool(x)
-        x = self.conv2(x)
-        x = nn.functional.relu(x)
-        x = self.pool(x)
-        x = x.view(-1, 64 * 5 * 5)
-        x = self.fc1(x)
-        x = nn.functional.relu(x)
-        x = self.fc2(x)
-        x = nn.functional.relu(x)
-        x = self.fc3(x)
-        x = nn.functional.log_softmax(x, dim = 1) # dim is the direction along which softmax is computed (row-wise)
-
-        return x
 
 # Function to evaluate the global model
 def evaluate_model(model, dataloader, criterion):

@@ -1,6 +1,6 @@
-from utils import CharLSTM
-from utils_federated import fedavg , CustomDataset , Client
-from utils_fedyin import ShakespeareObjectCrop , ShakespeareObjectCrop_noniid
+from scripts.shakespeare_utils.utils  import CharLSTM
+from scripts.shakespeare_utils.utils_federated import fedavg , CustomDataset , Client
+from scripts.shakespeare_utils.utils_fedyin import ShakespeareObjectCrop , ShakespeareObjectCrop_noniid
 import torch.nn as nn
 
 """main file for federated learning"""

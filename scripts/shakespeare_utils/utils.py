@@ -141,31 +141,3 @@ def read_data(train_data_dir, test_data_dir):
     assert train_groups == test_groups
 
     return train_clients, train_groups, train_data, test_data
-
-
-
-
-    
-
-
-class CharLSTM(nn.Module):
-    def __init__(self, input_size, embedding_size, hidden_size, num_layers, output_size):
-        super(CharLSTM, self).__init__()
-        self.hidden_size = hidden_size
-        self.num_layers = num_layers
-        self.embedding = nn.Embedding(input_size, embedding_size)
-        self.lstm = nn.LSTM(embedding_size, hidden_size, num_layers, batch_first=True)
-        #self.dropout = nn.Dropout(0.5)
-        self.fc = nn.Linear(hidden_size, output_size)
-
-    def forward(self, x, hidden):
-        embedded = self.embedding(x)
-        output, hidden = self.lstm(embedded, hidden)
-        #output=self.dropout(output) #add dropout for reducing overfitting
-        output = self.fc(output[:, -1, :])  # Get the output from the last time step
-        return output, hidden
-
-    def init_hidden(self, batch_size):
-        return (torch.zeros(self.num_layers, batch_size, self.hidden_size),
-                torch.zeros(self.num_layers, batch_size, self.hidden_size))
-
