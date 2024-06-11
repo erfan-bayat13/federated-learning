@@ -1,0 +1,1 @@
+this folder contains the implementation of a Long Short-Term Memory (LSTM) model to generate text based on the works of Shakespeare. The implementation includes both centralized and federated learning setups.
