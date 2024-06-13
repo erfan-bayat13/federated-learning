@@ -21,6 +21,28 @@ In this project, we implement and compare a centralized machine learning model a
 - Image classification using the CIFAR-100 dataset.
 - Text classification using the Shakespeare dataset.
 
+## Project Structure
+    ```bash
+    federated-learning-project/
+    │
+    ├── data/
+    │   ├── shakespeare/            # CIFAR-100 dataset
+    │
+    ├── models/                     # model implementations
+    │
+    ├── experiments/
+    │   ├── image_classification/   # Experiments for image classification
+    │   └── text_classification/    # Experiments for text classification
+    │
+    ├── results/                    # Results and performance metrics
+    │
+    ├── scripts/                    # Utility scripts for data processing and model training
+    │
+    ├── requirements.txt            # Python dependencies
+    ├── README.md                   # Project readme
+
+    ```
+
 ## Datasets
 
 ### CIFAR-100
