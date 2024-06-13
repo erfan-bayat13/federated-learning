@@ -1,46 +1,40 @@
-from scripts.shakespeare_utils.utils  import CharLSTM
-from scripts.shakespeare_utils.utils_federated import fedavg , CustomDataset , Client
-from scripts.shakespeare_utils.utils_fedyin import ShakespeareObjectCrop , ShakespeareObjectCrop_noniid
-import torch.nn as nn
-
-"""main file for federated learning"""
+import os
+import subprocess
 import torch
 from torch.utils.data import Dataset, DataLoader
+import torch.nn as nn
 import wandb
 
-batch_size=64
+from scripts.shakespeare_utils.utils import CharLSTM
+from scripts.shakespeare_utils.utils_federated import fedavg, CustomDataset, Client
+from scripts.shakespeare_utils.utils_fedyin import ShakespeareObjectCrop, ShakespeareObjectCrop_noniid
 
-iid=False
+batch_size = 64
+iid = False
 
-
-"!git clone https://github.com/FaureElia/shakespeare_leaf.git"
-print("INSTALL REQUIREMENTS")
-"!pip3 install -r /kaggle/working/shakespeare_leaf/requirements.txt"
-
-print()
+# Install requirements
+print("INSTALLING REQUIREMENTS")
+subprocess.run(["pip3", "install", "-r", "/data/shakespeare_leaf/requirements.txt"])
 print("LOAD DATASET")
 
-if iid==True:
-  "!/kaggle/working/shakespeare_leaf/data/shakespeare/preprocess.sh -s iid --iu 0.089 --sf 1.0 -k 2000 -t sample -tf 0.8"
+if iid:
+    subprocess.run(["/data/shakespeare_leaf/data/shakespeare/preprocess.sh", "-s", "iid", "--iu", "0.089", "--sf", "1.0", "-k", "2000", "-t", "sample", "-tf", "0.8"])
 else:
-  "!!/kaggle/working/shakespeare_leaf/data/shakespeare/preprocess.sh -s niid  --sf 1.0 -k 2000 -t sample -tf 0.8"
+    subprocess.run(["/data/shakespeare_leaf/data/shakespeare/preprocess.sh", "-s", "niid", "--sf", "1.0", "-k", "2000", "-t", "sample", "-tf", "0.8"])
 
-
-storage_path = '/kaggle/working/shakespeare_leaf/data/shakespeare/data/'
+storage_path = '/data/shakespeare_leaf/data/shakespeare/data/'
 
 if iid:
-  print("iid preprocessing")
-  name = 'shakepeare'
-  data_obj = ShakespeareObjectCrop(storage_path, name)
+    print("iid preprocessing")
+    name = 'shakespeare'
+    data_obj = ShakespeareObjectCrop(storage_path, name)
 else:
-  print("niid preprocessing")
-  name = 'shakepeare_nonIID'
-  number_of_clients=100
-  data_obj = ShakespeareObjectCrop_noniid(storage_path,name,number_of_clients)
+    print("niid preprocessing")
+    name = 'shakespeare_nonIID'
+    number_of_clients = 100
+    data_obj = ShakespeareObjectCrop_noniid(storage_path, name, number_of_clients)
 
-
-
-clients=[]
+clients = []
 
 for client_id,(client_x,client_y) in enumerate(zip(data_obj.clnt_x,data_obj.clnt_y)):
 
