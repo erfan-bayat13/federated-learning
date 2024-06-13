@@ -23,7 +23,7 @@ In this project, we implement and compare a centralized machine learning model a
 - Text classification using the Shakespeare dataset.
 
 ## Project Structure
-    ```bash
+    ```
     federated-learning-project/
     │
     ├── data/
