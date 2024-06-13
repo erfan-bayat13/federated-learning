@@ -1,3 +1,6 @@
 [submodule "data/data"]
 	path = data/data
 	url = https://github.com/FaureElia/shakespeare_leaf.git
+[submodule "data_shakespeare_leaf"]
+	path = data_shakespeare_leaf
+	url = https://github.com/FaureElia/shakespeare_leaf.git
