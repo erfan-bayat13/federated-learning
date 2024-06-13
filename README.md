@@ -12,6 +12,7 @@ This project explores the use of federated learning techniques for image and tex
 - [Usage](#usage)
 - [Experiments](#experiments)
 - [Results](#results)
+- [References](#references)
 
 ## Introduction
 
@@ -26,7 +27,7 @@ In this project, we implement and compare a centralized machine learning model a
     federated-learning-project/
     │
     ├── data/
-    │   ├── shakespeare/            # CIFAR-100 dataset
+    │   ├── shakespeare/            # shakespeare dataset provided by leaf
     │
     ├── models/                     # model implementations
     │
@@ -93,3 +94,12 @@ Federated: Distributes the Shakespeare dataset across multiple simulated clients
 ### Results
 
 The results of the experiments, including accuracy, loss, and other performance metrics, are saved in the results/ directory. Detailed analysis and comparison between the centralized and federated models are documented in this section.
+
+### References
+
+This implementation is based on the following papers:
+
+McMahan et al., "Communication-Efficient Learning of Deep Networks from Decentralized Data", AISTATS 2017
+Hsu et al., "Federated Visual Classification with Real-World Data Distribution", ECCV 2020
+Caldas et al., "Leaf: A benchmark for federated settings", Workshop on Federated Learning for Data Privacy and Confidentiality 2019
+Reddi et al., "Adaptive Federated Optimization", ICLR 2021
