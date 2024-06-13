@@ -1,6 +1,6 @@
-from utils_centralised import centralized
-from utils import CharLSTM 
-from utils_fedyin import ShakespeareObjectCrop
+from scripts.shakespeare_utils.utils_centralised import centralized , CustomDataset
+from models.models import CharLSTM 
+from scripts.shakespeare_utils.utils_fedyin import ShakespeareObjectCrop
 
 iid=True
 

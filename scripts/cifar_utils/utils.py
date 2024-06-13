@@ -19,7 +19,7 @@ import torch.nn as nn
 from collections import Counter
 
 
-from models.LSMT_model import FakeLeNet5
+from models.models import FakeLeNet5
 
 def partition_dataset(dataset, num_partitions):
     data_len = len(dataset)

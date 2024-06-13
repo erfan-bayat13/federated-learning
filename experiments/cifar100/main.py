@@ -1,4 +1,4 @@
-from utils import *
+from scripts.cifar_utils.utils import *
 
 
 transform = transforms.Compose([
