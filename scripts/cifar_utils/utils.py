@@ -308,3 +308,113 @@ def fedrep(clients, global_model, criterion, num_rounds, local_steps, fraction_c
         plt.title(f'Clients distribution (random selection)')
     plt.savefig('client_selection_frequency.pdf') 
     plt.show()
+
+def fedrep_with_warmup(clients, global_model, criterion, num_rounds, local_steps, fraction_clients, alpha=1.0, selection_method="dirichlet",num_warmups_rounds = 500):
+    """
+    Federated learning with warm-up rounds using FedRep algorithm.
+
+    Args:
+        clients: List of client objects participating in federated learning.
+        global_model: The global model to be trained.
+        criterion: Loss function for training.
+        num_rounds: Total number of rounds for federated learning.
+        local_steps: Number of local training steps for each client.
+        fraction_clients: Fraction of clients to be selected in each round.
+        alpha: Dirichlet distribution parameter for client selection.
+        selection_method: Method for selecting clients ('dirichlet' or 'random').
+        num_warmup_rounds: Number of warm-up rounds with FedAvg algorithm.
+
+    Returns:
+        None
+    """
+    # fedavg
+    client_selection_counts = {client.client_id: 0 for client in clients}  # Initialize the tracking dictionary
+    
+    dirichlet_probs = np.random.dirichlet([alpha] * len(clients))
+    
+    for round_num in range(num_warmups_rounds):
+        print(f"Round {round_num + 1}/{num_rounds}")
+        global_weights = [param.clone().detach() for param in global_model.parameters()]
+
+        # Select a subset of clients based on the selection method
+        if selection_method == "dirichlet":
+            selected_clients = np.random.choice(clients, int(len(clients) * fraction_clients), p=dirichlet_probs)
+        else:
+            selected_clients = np.random.choice(clients, int(len(clients) * fraction_clients), p=None)
+        
+        for client in selected_clients:
+            client_selection_counts[client.client_id] += 1  # Update the selection count
+
+        client_weights = []
+        for client in selected_clients:
+            local_model = FakeLeNet5().cuda()
+            set_weights(local_model, global_weights)
+            optimizer = optim.SGD(local_model.parameters(), lr=0.1, weight_decay=4e-3)
+
+            local_model = client.train(local_model, criterion, optimizer, local_steps)
+            client_weights.append([param.clone().detach() for param in local_model.parameters()])
+
+        # Aggregate weights
+        aggregated_weights = []
+        for weights_list in zip(*client_weights):
+            aggregated_weight = torch.mean(torch.stack(weights_list), dim=0)
+            aggregated_weights.append(aggregated_weight)
+
+        set_weights(global_model, aggregated_weights)
+        accuracy, test_loss = evaluate_model(global_model, test_loader, criterion)
+        #wandb.log({"test_accuracy": accuracy * 100, "test_loss":test_loss})
+        print(f"Global model accuracy after round {round_num + 1}: {accuracy * 100:.2f}%")
+    
+    # fedrep
+    for round_num in range(num_rounds - num_warmups_rounds):
+        print(f"Round {round_num + 1}/{num_rounds}")
+        global_weights = [param.clone().detach() for param in global_model.parameters()]
+
+        # Select a subset of clients based on the selection method
+        if selection_method == "dirichlet":
+            selected_clients = np.random.choice(clients, int(len(clients) * fraction_clients), p=dirichlet_probs)
+        else:
+            selected_clients = np.random.choice(clients, int(len(clients) * fraction_clients), p=None)
+        
+        for client in selected_clients:
+            client_selection_counts[client.client_id] += 1  # Update the selection count
+        client_weights = []
+        for client in selected_clients:
+            local_model = FakeLeNet5().cuda()
+            set_weights(local_model, global_weights)
+            local_model.freeze_except_last_layer()
+            optimizer = optim.SGD(local_model.parameters(), lr=0.1, weight_decay=4e-3)
+
+            local_model = client.train(local_model, criterion, optimizer, local_steps -1)
+            local_model.unfreeze_all_layers()
+            local_model = client.train(local_model, criterion, optimizer, 1)
+            
+            client_weights.append([param.clone().detach() for param in local_model.parameters()])
+
+            # Aggregate weights
+        aggregated_weights = []
+        for weights_list in zip(*client_weights):
+            aggregated_weight = torch.mean(torch.stack(weights_list), dim=0)
+            aggregated_weights.append(aggregated_weight)
+
+        set_weights(global_model, aggregated_weights)
+        accuracy, test_loss = evaluate_model(global_model, test_loader, criterion)
+        #wandb.log({"test_accuracy": accuracy * 100, "test_loss":test_loss})
+        print(f"Global model accuracy after round {round_num + 1}: {accuracy * 100:.2f}%")
+    
+    # Plot the frequency of client selection
+    plt.figure(figsize=(10, 6))
+
+    # Normalize the selection counts
+    normalized_counts = [count / sum(client_selection_counts.values()) for count in client_selection_counts.values()]
+
+    # Create the bar plot
+    plt.bar(client_selection_counts.keys(), normalized_counts)
+    plt.xlabel('Client ID')
+    plt.ylabel('Relative frequency')
+    if selection_method=="dirichlet":  
+        plt.title(f'Clients distribution (gamma={alpha})')
+    else:
+        plt.title(f'Clients distribution (random selection)')
+    plt.savefig('client_selection_frequency.pdf') 
+    plt.show()
