@@ -29,7 +29,15 @@ class FakeLeNet5(nn.Module):
         x = nn.functional.log_softmax(x, dim = 1) # dim is the direction along which softmax is computed (row-wise)
 
         return x
-    
+    def freeze_except_last_layer(self):
+        for name, param in self.named_parameters():
+            if name not in ['fc3.weight', 'fc3.bias']:
+                param.requires_grad = False
+    def unfreeze_all_layers(self):
+        for param in self.parameters():
+            param.requires_grad = True
+
+
 class CharLSTM(nn.Module):
     def __init__(self, input_size, embedding_size, hidden_size, num_layers, output_size):
         super(CharLSTM, self).__init__()
