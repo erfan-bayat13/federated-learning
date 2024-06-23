@@ -11,6 +11,7 @@ This project explores the use of federated learning techniques for image and tex
 - [Installation](#installation)
 - [Usage](#usage)
 - [Experiments](#experiments)
+- [Method](#method)
 - [Results](#results)
 - [References](#references)
 
@@ -90,6 +91,16 @@ Federated: Distributes the CIFAR-100 dataset across multiple simulated clients a
 ## Text Classification
 Centralized: Trains a single model on the entire Shakespeare dataset.
 Federated: Distributes the Shakespeare dataset across multiple simulated clients and trains a federated model.
+
+## Method
+
+In this project, we implemented and compared two federated learning methods: FedAvg and a novel method called FedAvg2Rep.
+
+### FedAvg
+FedAvg (Federated Averaging) is a standard federated learning algorithm where each client trains a local model on its own data and sends the model updates to a central server. The server then averages these updates to create a global model, which is sent back to the clients for the next round of training.
+
+### FedAvg2Rep
+FedAvg2Rep is an enhancement of the FedAvg algorithm. In this method, after the initial round of federated averaging, a secondary averaging step is introduced to further refine the model. This secondary step aims to improve the representational power of the global model by incorporating additional layers of aggregation, thus potentially leading to better
 
 ### Results
 
