@@ -79,7 +79,7 @@ To run this project, you need Python 3.7+ and the necessary dependencies listed 
 
 ### Data Preparation
 
-Ensure that the CIFAR-100 and Shakespeare datasets are downloaded and placed in the `data/` directory. You can use the provided scripts in the `scripts/` directory to download and preprocess the datasets.
+Ensure that Shakespeare dataset is downloaded and placed in the `data/` directory. You can use the provided scripts in the `scripts/` directory to download and preprocess the datasets.
 
 ### Running Experiments
 
