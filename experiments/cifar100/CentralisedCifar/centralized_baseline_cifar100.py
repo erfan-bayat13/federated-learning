@@ -78,40 +78,14 @@ sample, _ = cifar100_train[0]
 print(type(sample))
 
 # Define a function to denormalize the image
-def denormalize(image):
-    image = image.to('cpu').numpy().transpose((1, 2, 0))
-    mean = np.array([0.5071, 0.4866, 0.4409])
-    std = np.array([0.2673, 0.2564, 0.2762])
-    image = image * std + mean
-    image = np.clip(image, 0, 1)
-    return image
+# def denormalize(image):
+#     image = image.to('cpu').numpy().transpose((1, 2, 0))
+#     mean = np.array([0.5071, 0.4866, 0.4409])
+#     std = np.array([0.2673, 0.2564, 0.2762])
+#     image = image * std + mean
+#     image = np.clip(image, 0, 1)
+#     return image
 
-# Plotting example images from the dataset
-
-indices = [0, 100, 200, 300, 400]  # example
-
-# Create a subplot for each image
-fig, axes = plt.subplots(1, len(indices), figsize=(15, 3))
-
-# to get the 'string' labels
-with open('./data/cifar-100-python/meta', 'rb') as f:
-    cifar100_meta = pickle.load(f)
-    cifar100_classes = cifar100_meta['fine_label_names']
-# cifar100_classes is a list (you can access the corresponding 'string' label by indexing)
-
-# Print each image
-for i, idx in enumerate(indices):
-    # Get the image and its label
-    image, label = cifar100_test[idx]
-    # Undo normalization
-    image_norm= denormalize(image)
-    # Display the image
-    axes[i].imshow(image_norm)
-    axes[i].set_title('Label: {}'.format(cifar100_classes[label])) # cifar100_train.classes[label] to show the 'string' label
-    axes[i].axis('off')  # Turn off axis
-
-plt.tight_layout()
-plt.show()
 
 # Create data loaders
 trainval_loader = torch.utils.data.DataLoader(cifar100_trainval, batch_size=64, shuffle=True)
