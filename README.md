@@ -61,7 +61,7 @@ To run this project, you need Python 3.7+ and the necessary dependencies listed 
 1. Clone the repository:
     ```bash
     git clone https://github.com/erfan-bayat13/federated-learning.git
-    cd federated-learning-project
+    cd federated-learning
     ```
 
 2. Create a virtual environment and activate it:
